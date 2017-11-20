@@ -4,14 +4,15 @@ import static Values.Strings.ORDERS_SQLTABLE;
 import static Values.Strings.sessionCart;
 import static Values.Strings.sessionUsername;
 import static Values.Strings.user_Username;
-import static Values.Strings.user_cart;
+import static Values.Strings.user_cart_SQLTABLE;
 import static Values.Strings.cart_json;
 import static Values.Strings.getOrderAttribute;
 import static Values.Strings.getCartAttribute;
 import static databases.ComplicatedQuery.variableNumberInsertQuery;
+import static databases.ComplicatedQuery.updateQuery;
 import static databases.DatabaseConnection.insert;
 import static databases.DatabaseConnection.query;
-
+import static databases.DatabaseConnection.deleteAndUpdateQuery;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,9 +38,15 @@ public class ShoppingCartController {
 	// This function run when shopping_cart.jsp first load
 	@RequestMapping(value = "get_cart", method = RequestMethod.GET)
 	@ResponseBody
-	public String getCart(ModelMap model) {
-		System.out.println("GETCart: "+model.get(sessionCart));
-		return String.valueOf(model.get(sessionCart));
+	public String getCart(ModelMap model) throws SQLException {
+		String sessionCartJson = null;
+		String username = String.valueOf(model.get(sessionUsername));
+		String checkCartQuery = "SELECT "+cart_json+" FROM "+user_cart_SQLTABLE+" WHERE "+user_Username+" = "+username;
+		ResultSet resultSet = query(checkCartQuery);
+		while(resultSet.next()) {
+				sessionCartJson = resultSet.getString(cart_json);
+		}
+		return sessionCartJson;
 	}
 	// Update cart
 	@RequestMapping(value = "updateCart", method = RequestMethod.POST)
@@ -48,23 +55,26 @@ public class ShoppingCartController {
 			@RequestParam int item_id,
 			@RequestParam int item_quantity,
 			ModelMap model) {
-		
-		String sessionJson = String.valueOf(model.get(sessionCart));
-		String json = updateCart(sessionJson, item_id, item_quantity);
-		model.put(sessionCart, json);
-		//System.out.println(json);
-		return json;
+		String username = String.valueOf(model.get(sessionUsername));
+		String cartJson = getJsonCartByUserName(username);
+		cartJson = updateCartQuantity(cartJson, item_id, item_quantity);
+		if(updateJsonItemToDatabase(cartJson, username))
+			return cartJson;
+		else
+			return "";
 	}
 	
 	// Delete Item in Cart
 	@RequestMapping(value = "delete_item", method = RequestMethod.POST)
 	@ResponseBody
 	public String deleteItem(@RequestParam int item_id, ModelMap model) {
-		String sessionJson = String.valueOf(model.get(sessionCart));
-		String json = deleteItem(sessionJson, item_id);
-		model.put(sessionCart, json);
-		//System.out.println(json);
-		return json;
+		String username = String.valueOf(model.get(sessionUsername));
+		String cartJson = getJsonCartByUserName(username);
+		cartJson = deleteItem(cartJson, item_id);
+		if(updateJsonItemToDatabase(cartJson, username))
+			return cartJson;
+		else 
+			return "";
 	}
 	@RequestMapping(value = "/add_item_to_shoppingcart", method = RequestMethod.POST)
 	@ResponseBody
@@ -76,47 +86,75 @@ public class ShoppingCartController {
 			@RequestParam String item_image_link,
 			@RequestParam int restaurant_id,
 			@RequestParam int item_quantity,
-			ModelMap model) {
+			ModelMap model) throws SQLException {
 		
-		//System.out.println("id: "+item_id+" name: "+item_name+" link: "+item_image_link+" quantity: "+item_quantity);
+
+		String username = String.valueOf(model.get(sessionUsername));
+		String sessionCartJson = null;
+		sessionCartJson = getJsonCartByUserName(username);
 		
-		String sessionJson = String.valueOf(model.get(sessionCart));
-		String returnJson = addItemToCart(sessionJson, item_id, item_name, item_price, item_image_link,restaurant_id,item_quantity);
-		String[] value = {String.valueOf(model.get(sessionUsername)),returnJson};
-		String query = variableNumberInsertQuery(getCartAttribute(),value, user_cart);
-		System.out.println(query);
-		Boolean result = insert(query);
-		if(result)
-		    return item_quantity + "x " +item_name +" added to cart";
-		else
-			return "Fail to update item into cart.";
+		//System.out.println("Session Cart: "+sessionCartJson);
+		// Update
+		if(sessionCartJson != null) {
+			//System.out.println("Update");
+			String updatedCartItem = updateCartJson(sessionCartJson, item_id, item_name,item_price,item_image_link,restaurant_id,item_quantity);
+			if(updateJsonItemToDatabase(updatedCartItem,username))
+				return item_quantity + "x " +item_name +" added to cart";
+			else
+				return "Fail to update item into cart.";	
+		// Create new cart	
+		} else{
+			String returnJson = updateCartJson(sessionCartJson, item_id, item_name, item_price, item_image_link,restaurant_id,item_quantity);
+			String[] value = {String.valueOf(model.get(sessionUsername)),returnJson};
+			String query = variableNumberInsertQuery(getCartAttribute(),value, user_cart_SQLTABLE);
+			//System.out.println(query);
+			boolean result = insert(query);
+			if(result)
+			    return item_quantity + "x " +item_name +" added to cart";
+			else
+				return "Fail to update item into cart.";
+		}
 	}
 
-	
 	@RequestMapping(value = "place_order", method = RequestMethod.GET)
 	public String placeOrder(ModelMap model) {
+		
 		String username = String.valueOf(model.get(sessionUsername));
-		String query = "SELECT "+cart_json+" WHERE "+user_Username+" = '"+username+"'";
-		ResultSet result = query(query);
-		try {
-			if(result.next()) {
-				String cartJson = result.getString(cart_json);
-				boolean orderResult = placeOrder(cartJson, String.valueOf(model.get(sessionUsername)));
-				if(orderResult) {
-					query = "DELETE FROM cart WHERE username = '"+username+"'";
-					return "success";
-				}
-				else 
-					return "shopping_cart";
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		String orderJson = getJsonCartByUserName(username);
+		if(orderJson != null && orderJson != "") {
+			if(placeOrder(orderJson, username)) {
+				String deleteCartQuery = "DELETE FROM cart WHERE username = '"+username+"'";
+				deleteAndUpdateQuery(deleteCartQuery);
+				return "success";
+			}else
+				return "shopping_cart";		
 		}
-		return "shopping_cart";
+		else 
+			return "shopping_cart";
 	}
 	
 	// Methods
-	private static String addItemToCart (String json, int item_id, String item_name, String item_price, String item_image_link , int restaurant_id, int item_quantity) {
+	private static boolean updateJsonItemToDatabase(String updatedCartItem, String username) {
+		String query = updateQuery(user_cart_SQLTABLE, cart_json, updatedCartItem, user_Username, username);
+		if(insert(query))
+			return true;
+		else 
+			return false;
+	}
+	private static String getJsonCartByUserName(String username) {
+		String query = "SELECT "+cart_json+" FROM "+user_cart_SQLTABLE+" WHERE "+user_Username+" = "+username;
+		ResultSet resultSet = query(query);
+		String result = null;
+		try {
+			while(resultSet.next())
+				result = resultSet.getString(cart_json);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	private static String updateCartJson (String json, int item_id, String item_name, String item_price, String item_image_link , int restaurant_id, int item_quantity) {
 		// Add item if session json is empty
 		if(json == null || json.isEmpty() || json.equals("null")){
 			ShoppingCart cart = new ShoppingCart(item_id, item_name, item_price, item_image_link, restaurant_id, item_quantity);
@@ -147,7 +185,7 @@ public class ShoppingCartController {
 			return returnJson;
 		}
 	}
-	private static String updateCart(String json, int item_id, int item_quantity) {
+	private static String updateCartQuantity(String json, int item_id, int item_quantity) {
 		ShoppingCart cart[] = new Gson().fromJson(json, ShoppingCart[].class);
 		ArrayList<ShoppingCart> list = new ArrayList<ShoppingCart>();
 		for(ShoppingCart item: cart) {

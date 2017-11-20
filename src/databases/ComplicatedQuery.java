@@ -72,4 +72,9 @@ public static String updateQuery(String[] attribute, String[] values, String tab
 	
 	return query.toString();
 }
+public static String updateQuery(String table, String UpdateAttribute, String updateValue, String whereAttribute, String whereValue) {
+	String query = "UPDATE "+table+" SET "+UpdateAttribute+" = '"+updateValue+"' where "+whereAttribute+" = '"+whereValue+"'";
+	System.out.println(query);
+	return query;
+}
 }

@@ -17,7 +17,7 @@ public static final String restaurant_owner_detail_SQLTable = "resturant_owner_d
 public static final String users_SQLTable = "users";
 public static final String restaurant_review_SQLTable = "restaurant_review";
 public static final String ORDERS_SQLTABLE = "orders";
-public static final String user_cart = "cart";
+public static final String user_cart_SQLTABLE = "cart";
 
 // items
 public static final String item_id = "item_id";

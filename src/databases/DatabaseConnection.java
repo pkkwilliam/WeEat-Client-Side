@@ -58,6 +58,22 @@ public static ResultSet query(String query) {
 	}
 	return null;
 }
+public static boolean deleteAndUpdateQuery(String query) {
+	Connection con = getConnection();
+	try {
+		PreparedStatement statement = con.prepareStatement(query);	
+		int result = statement.executeUpdate();
+		
+		if(result == 1)
+			return true;
+		else
+			return false;
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	return false;
+}
 public static String register(String[] attribute, String values[], String table) {
 	// Username = 0 , Password = 1, FirstName = 2, Lastname = 3, Email = 4, Tel = 5, Email2 = 6
 	if(!values[4].equals(values[6])) {
