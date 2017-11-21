@@ -15,6 +15,10 @@ function getStatusUpdate(){
 }
 function displayStatus(status){
 	var json = JSON.parse(status);
+	var i;
+	for(int = 0; i < json.length; i++){
+		
+	}
 	var status = json[0].status;
 	var statueLabel = "Error";
 	switch(status){
