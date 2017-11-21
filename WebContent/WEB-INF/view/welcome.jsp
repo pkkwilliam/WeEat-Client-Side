@@ -5,7 +5,7 @@
 <%@ include file ="header.jsp" %>
 </head>
 <body>
-
+<div id = "location"></div>
 <span id="status"></span>
 <span id=list></span>
 </body>

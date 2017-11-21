@@ -6,7 +6,10 @@
 </head>
 <body>
 <h1> Your Order Status</h1>
-<p id="status"></p>
+<h3 id="orderNumber"></h3>
+<div id = progressBar></div>
+<br/>
+
 </body>
 <spring:url value="/resources/success.js" var="successJS" />
 <script src="${successJS}"></script>

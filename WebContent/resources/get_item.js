@@ -25,21 +25,15 @@ function renderHTML(data){
 	var i;
 	for(i = 0; i < data.length; i++){
 		var idNumber = "number" + data[i].item_id;
-		var htmlString = "<div>";
-		htmlString += "<p>"+ data[i].item_name +"</p>";
-		htmlString += "<p>"+ data[i].item_price +"</p>";
-		htmlString += "<p>"+ data[i].item_image_link+"</p>";
-		htmlString += "<p>"+ data[i].item_description+"</p>";
-		htmlString += "<input id="+ idNumber +" type='number' value='1'/>";
-		htmlString += '<button onClick = "addItem(\''+data[i].item_id+'\',\''
-		+data[i].item_name+'\',\''
-		+data[i].item_price+'\',\''
-		+data[i].item_image_link+'\',\''
-		+data[i].restaurant_id+'\',\''
-		+idNumber
-		+'\')">ADD</button>';
-		
-	    htmlString += "</div>";
+		var htmlString = '<div class="panel panel-warning" style="margin: 20px;"><div class="panel-heading">'+data[i].item_name+'</div><table><tr>';
+		htmlString += '<td width="60"><img style="width: 60; height: 60;" src="'+data[i].item_image_link+'"/></td>';
+		htmlString += '<td><span>'+data[i].item_description+'</span></td>';
+		htmlString += '<td>'+data[i].item_price+'</td></tr>';
+		htmlString += '<tr><td>';
+		htmlString += "<input id="+ idNumber +" type='number' value='1'/></td>";
+		htmlString += '<td><button onClick = "addItem(\''+data[i].item_id+'\',\''+data[i].item_name+'\',\''+data[i].item_price+'\',\''+data[i].item_image_link+'\',\''+data[i].restaurant_id+'\',\''+idNumber+'\')">ADD</button></td>';
+		htmlString += '</tr></table></div><br/>';
+	    
 		list.insertAdjacentHTML("beforeend",htmlString);
 	}
 }

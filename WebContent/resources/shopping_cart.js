@@ -51,7 +51,7 @@ function renderHTML(data){
 	for(var i = 0; i < data.length; i++){
 		var htmlString = "<div>";
 		var idNumber = "number" + data[i].item_id;
-		htmlString += "<p>"+ data[i].item_name +"</p>";
+		htmlString += "<p style='font-size: 50px'>"+ data[i].item_name +"</p>";
 		htmlString += "<p>"+ data[i].item_price +"</p>";
 		htmlString += "<p>"+ data[i].item_image_link +"</p>";
 		// An input of number when changes make it will call function addItem

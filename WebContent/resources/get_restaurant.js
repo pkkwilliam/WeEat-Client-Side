@@ -12,6 +12,7 @@ function getGeolocation(){
 	request.open('POST',url);
 	request.onload = function(){
 		parseJSON(request.responseText);
+		
 	};
 	request.send();
 }
@@ -19,6 +20,7 @@ function parseJSON(json){
 	json = JSON.parse(json);
 	var latitude = json.location.lat;
 	var longtitude = json.location.lng;
+	document.getElementById("status").innerHTML = "Your location: "+latitude+" "+longtitude;
 	getRestaurant(latitude,longtitude);
 	
 }
@@ -39,14 +41,14 @@ function renderHTML(data){
 	var i;
 	for(i = 0; i < data.length; i++){
 		var htmlString = "<div id="+data[i].restaurant_id+" onClick='get_id(this.id)'>";
-		htmlString += "<li>"+ data[i].restaurant_image_link +"</li>";
-		htmlString += "<li>"+ data[i].restaurant_name +"</li>";
-		htmlString += "<li>"+ data[i].restaurant_short_description+"</li>";
-		htmlString += "<li>"+ data[i].restaurant_address+"</li>";
-		htmlString += "<li>"+ data[i].restaurant_city+"</li>";
-		htmlString += "<li>"+ data[i].restaurant_state+"</li>";
-		htmlString += "<li>"+ data[i].restaurant_zip+"</li>";
-	    htmlString += "</div>";
+		htmlString += '<div class="panel panel-primary" style="margin: 20px;">';
+		htmlString += '<div class="panel-heading">'+ data[i].restaurant_name +'</div>';
+		htmlString += '<table><tr>';
+		htmlString += '<td width="67"><img style="width: 60; height: 60;"          src="'+data[i].restaurant_image_link+'"/></td>';
+		htmlString += '<td width="232"><span>'+data[i].restaurant_short_description+'</span></td>';
+		htmlString += '</tr><tr style="font-size: 12px;">';
+		htmlString += '<td colspan="2">'+data[i].restaurant_address+' '+data[i].restaurant_city+' '+data[i].restaurant_state+' '+data[i].restaurant_zip+' Tel:'+data[i].restaurant_tel+'</td>';
+		htmlString += '</tr></table></div><br/>';
 		list.insertAdjacentHTML("beforeend",htmlString);
 	}
 }
