@@ -4,6 +4,12 @@
 <title>WeEat.com</title>
 <%@ include file ="header.jsp" %>
 </head>
+
+<style>
+body {
+    background-image: url("http://lendmycard.com/CS691/image/background.jpg");
+}
+</style>
 <body>
 <div id = "location"></div>
 <span id="status"></span>

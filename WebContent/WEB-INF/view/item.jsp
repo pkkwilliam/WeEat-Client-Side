@@ -5,6 +5,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+body {
+    background-image: url("http://lendmycard.com/CS691/image/background.jpg");
+}
+</style>
 <body>
 <div id = "status"></div>
 <span id = "list"></span>

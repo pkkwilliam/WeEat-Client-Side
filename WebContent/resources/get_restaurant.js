@@ -40,15 +40,19 @@ function renderHTML(data){
 	data = JSON.parse(data);
 	var i;
 	for(i = 0; i < data.length; i++){
-		var htmlString = "<div id="+data[i].restaurant_id+" onClick='get_id(this.id)'>";
-		htmlString += '<div class="panel panel-primary" style="margin: 20px;">';
-		htmlString += '<div class="panel-heading">'+ data[i].restaurant_name +'</div>';
-		htmlString += '<table><tr>';
-		htmlString += '<td width="67"><img style="width: 60; height: 60;"          src="'+data[i].restaurant_image_link+'"/></td>';
+		var idNumber = "number" + data[i].restaurant_id;
+		var htmlString = '<div class="card" style="margin: 60px" id='+data[i].restaurant_id+' onClick="get_id(this.id)">';
+		htmlString += '<h3 class="card-header" style="background-color: cornflowerblue; color: white">'+data[i].restaurant_name+'</h3>';
+		htmlString += '<div class="card-block">';
+        htmlString += '<table style="margin: 10px"><tr>';
+		if(data[i].restaurant_image_link == null)
+			htmlString += '<td width="67"><img style="width: 60; height: 60;"          src="http://lendmycard.com/CS691/image/default.png"/></td>';
+		else
+		    htmlString += '<td width="67"><img style="width: 60; height: 60;"          src="'+data[i].restaurant_image_link+'"/></td>';
 		htmlString += '<td width="232"><span>'+data[i].restaurant_short_description+'</span></td>';
 		htmlString += '</tr><tr style="font-size: 12px;">';
 		htmlString += '<td colspan="2">'+data[i].restaurant_address+' '+data[i].restaurant_city+' '+data[i].restaurant_state+' '+data[i].restaurant_zip+' Tel:'+data[i].restaurant_tel+'</td>';
-		htmlString += '</tr></table></div><br/>';
+		htmlString += '</tr></div>';
 		list.insertAdjacentHTML("beforeend",htmlString);
 	}
 }

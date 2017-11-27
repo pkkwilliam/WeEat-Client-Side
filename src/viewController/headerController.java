@@ -19,6 +19,7 @@ public class headerController {
 	
     @RequestMapping(value = "/header", method = RequestMethod.GET)
     public String header(ModelMap model) {
+        model.addAttribute("username",String.valueOf(model.get(sessionUsername)));
     	    return "header";
     }
     @RequestMapping(value= "/checkLogin", method = RequestMethod.GET)

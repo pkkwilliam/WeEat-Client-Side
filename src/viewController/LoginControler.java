@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class LoginControler {
     @RequestMapping(value="login")
     public String loginView(ModelMap model) {
+    		System.out.println("At Login");
     	    return "login";
     }
     

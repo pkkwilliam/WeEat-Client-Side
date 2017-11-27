@@ -6,8 +6,9 @@
 </head>
 <body>
 <h1> Your Order Status</h1>
-<h3 id="orderNumber"></h3>
-<div id = progressBar></div>
+
+<div id = "orders"></div>
+
 <br/>
 
 </body>

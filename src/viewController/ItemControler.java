@@ -8,6 +8,8 @@ import static Values.Strings.item_name;
 import static Values.Strings.item_price;
 import static Values.Strings.items_SQLTable;
 import static Values.Strings.sessionCart;
+import static Values.Strings.detail_restaurant_name;
+import static Values.Strings.resturant_detail_SQLTable;
 import static databases.DatabaseConnection.query;
 
 
@@ -34,6 +36,18 @@ public class ItemControler {
     @RequestMapping(value = "item")
     public String itemView(ModelMap model) {
  	     return "item";
+    }
+    
+    @RequestMapping(value = "getRestaurantName", method = RequestMethod.GET)
+    @ResponseBody
+    public String getRestaurantName(@RequestParam int restaurant_id) throws SQLException {
+    	    String query = "SELECT "+detail_restaurant_name+" FROM "+resturant_detail_SQLTable+" WHERE "+detail_restaurant_id+" = "+restaurant_id;
+    	    ResultSet result = query(query);
+    	    String restaurantName = null;
+    	    while(result.next()) {
+    	       	restaurantName = result.getString(detail_restaurant_name);
+    	    }
+    	    return restaurantName;
     }
     
     @RequestMapping(value = "getItemHandler", method = RequestMethod.POST)
