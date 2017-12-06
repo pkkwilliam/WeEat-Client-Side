@@ -49,18 +49,17 @@ function renderHTML(data){
 	data = JSON.parse(data);
 	var totalAmount = 0;
 	for(var i = 0; i < data.length; i++){
-		var htmlString = "<div>";
+		var htmlString = '<div class="card" >';
 		var idNumber = "number" + data[i].item_id;
-		htmlString += "<p style='font-size: 50px'>"+ data[i].item_name +"</p>";
-		htmlString += "<p>"+ data[i].item_price +"</p>";
-		htmlString += "<p>"+ data[i].item_image_link +"</p>";
-		// An input of number when changes make it will call function addItem
-		htmlString += '<input id = '+idNumber+' type="number" value='+data[i].item_quantity+' onchange = "updateCart(\''+data[i].item_id+'\',\''+idNumber+'\')"/>';
-		
-		htmlString += '<button onClick = "updateCart(\''+data[i].item_id+'\',\''+idNumber+'\')">Add 1</button>';
-		htmlString += '<button onClick = "deleteItem(\''+data[i].item_id+'\')">Delete</button>';
-	    htmlString += "</div>";
-	    totalAmount += (data[i].item_price * data[i].item_quantity);
+		htmlString += '<h3 class="card-header">'+data[i].item_name+'</h3>';
+		htmlString += '<div class="card-block">';
+        htmlString += '<table style="margin: 10px"><tr>';
+		htmlString += '<td><img src ="'+data[i].item_image_link+'"/></td>';
+		htmlString += "<td>"+ data[i].item_price +"</td>";
+		htmlString += '<td><input id = '+idNumber+' type="number" value='+data[i].item_quantity+' onchange = "updateCart(\''+data[i].item_id+'\',\''+idNumber+'\')"/></td>';
+		htmlString += '<td><button onClick = "deleteItem(\''+data[i].item_id+'\')">Delete</button></td>';
+	    htmlString += "</tr></div>";
+			    totalAmount += (data[i].item_price * data[i].item_quantity);
 		list.insertAdjacentHTML("beforeend",htmlString);
 		
 	}

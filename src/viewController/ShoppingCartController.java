@@ -41,7 +41,7 @@ public class ShoppingCartController {
 	public String getCart(ModelMap model) throws SQLException {
 		String sessionCartJson = null;
 		String username = String.valueOf(model.get(sessionUsername));
-		String checkCartQuery = "SELECT "+cart_json+" FROM "+user_cart_SQLTABLE+" WHERE "+user_Username+" = "+username;
+		String checkCartQuery = "SELECT "+cart_json+" FROM "+user_cart_SQLTABLE+" WHERE "+user_Username+" = '"+username+"'";
 		ResultSet resultSet = query(checkCartQuery);
 		while(resultSet.next()) {
 				sessionCartJson = resultSet.getString(cart_json);
@@ -142,7 +142,7 @@ public class ShoppingCartController {
 			return false;
 	}
 	private static String getJsonCartByUserName(String username) {
-		String query = "SELECT "+cart_json+" FROM "+user_cart_SQLTABLE+" WHERE "+user_Username+" = "+username;
+		String query = "SELECT "+cart_json+" FROM "+user_cart_SQLTABLE+" WHERE "+user_Username+" = '"+username+"'";
 		ResultSet resultSet = query(query);
 		String result = null;
 		try {

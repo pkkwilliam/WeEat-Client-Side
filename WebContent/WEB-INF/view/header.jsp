@@ -28,9 +28,12 @@
 </nav>
 
 
-<form id="checkLogin" method ="GET" action="checkLogin"></form>
+<form id="checkLogin" method ="GET" action="checkLogin">
+    
+</form>
     
 </body>
 <spring:url value="/resources/header.js" var="headerJS" />
+
 <script src="${headerJS}"></script>
 </html>

@@ -1,14 +1,18 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 <title>WeEat.com</title>
+<link rel="stylesheet" href="http://lendmycard.com/CS691/css/2-col-portfolio.css">
+<link href="http://lendmycard.com/CS691/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 <%@ include file ="header.jsp" %>
 </head>
 
 <style>
-body {
-    background-image: url("http://lendmycard.com/CS691/image/background.jpg");
-}
+
 </style>
 <body>
 <div id = "location"></div>

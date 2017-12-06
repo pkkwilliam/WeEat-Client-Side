@@ -36,7 +36,7 @@ div.well{
 
 .Absolute-Center.is-Responsive {
   width: 50%; 
-  height: 75%;
+  height: 100%;
   min-width: 200px;
   max-width: 400px;
   padding: 40px;
@@ -45,14 +45,14 @@ div.well{
 #logo-container{
   margin: auto;
   margin-bottom: 10px;
-  width:200px;
-  height:200px;
+  width:150px;
+  height:150px;
   
 }</style>
  <div class="container">
   <div class="row">
     <div class="Absolute-Center is-Responsive">
-     <div id="logo-container"><img style="width: 200px; height: 200px;" src="http://lendmycard.com/CS691/image/wheat.png"></div>
+     <div id="logo-container"><img style="width: 150px; height: 150px;" src="http://lendmycard.com/CS691/image/wheat.png"></div>
       <div class="col-sm-12 col-md-10 col-md-offset-1">
         <form action = "/Project2/registerHandler" method="POST">
           <div class="form-group input-group">
@@ -61,7 +61,7 @@ div.well{
           </div>
           <div class="form-group input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input class="form-control" type="text" name="password" placeholder="password"/>     
+            <input class="form-control" type="password" name="password" placeholder="password"/>     
           </div>
           <div class="form-group input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
