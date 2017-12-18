@@ -5,14 +5,13 @@
  */
 
 
-var result = document.getElementById("result");
+var list = document.getElementById("list");
 function getGeolocation(){
 	var request = new XMLHttpRequest();
 	var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBKlsmgBuELo1u3G33dHkI_DNNPZ2i4_p8";
 	request.open('POST',url);
 	request.onload = function(){
 		parseJSON(request.responseText);
-		
 	};
 	request.send();
 }
@@ -20,7 +19,6 @@ function parseJSON(json){
 	json = JSON.parse(json);
 	var latitude = json.location.lat;
 	var longtitude = json.location.lng;
-	document.getElementById("status").innerHTML = "Your location: "+latitude+" "+longtitude;
 	getRestaurant(latitude,longtitude);
 	
 }
@@ -39,23 +37,28 @@ function getRestaurant(latitude, longtitude){
 function renderHTML(data){
 	data = JSON.parse(data);
 	var i;
-	for(i = 0; i < data.length; i++){
-		var idNumber = "number" + data[i].restaurant_id;
-		var htmlString = '<div class="card" style="margin: 60px" id='+data[i].restaurant_id+' onClick="get_id(this.id)">';
-		htmlString += '<h3 class="card-header" style="background-color: cornflowerblue; color: white">'+data[i].restaurant_name+'</h3>';
-		htmlString += '<div class="card-block">';
-        htmlString += '<table style="margin: 10px"><tr>';
-		if(data[i].restaurant_image_link == null)
-			htmlString += '<td width="67"><img style="width: 60; height: 60;"          src="http://lendmycard.com/CS691/image/default.png"/></td>';
-		else
-		    htmlString += '<td width="67"><img style="width: 60; height: 60;"          src="'+data[i].restaurant_image_link+'"/></td>';
-		htmlString += '<td width="232"><span>'+data[i].restaurant_short_description+'</span></td>';
-		htmlString += '</tr><tr style="font-size: 12px;">';
-		htmlString += '<td colspan="2">'+data[i].restaurant_address+' '+data[i].restaurant_city+' '+data[i].restaurant_state+' '+data[i].restaurant_zip+' Tel:'+data[i].restaurant_tel+'</td>';
-		htmlString += '</tr></div>';
-		list.insertAdjacentHTML("beforeend",htmlString);
+	var memmory = '<div class="row">';
+		for(i = 0; i < data.length; i++){
+			var htmlString = '<div class="col-lg-6 portfolio-item" id='+data[i].restaurant_id+' onClick="get_id(this.id)">';
+			htmlString += '<div class="card h-100">';
+			if(data[i].restaurant_image_link == null)		
+			htmlString += '<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>';
+			else{
+				var link = 'http://lendmycard.com/CS691/image/restaurant/'+data[i].restaurant_id+'/'+data[i].restaurant_image_link;
+				htmlString += '<img style="height:350;" src="'+link+'"/>';
+			}
+			htmlString += '<div class="card-body" style="height:160px">';
+			htmlString += '<h4 class="card-title">';
+			htmlString += '<a>'+data[i].restaurant_name+'</a>';
+			htmlString += '</h4>';
+			htmlString += '<p class="card-text">'+data[i].restaurant_detail_description+'</p>';
+			htmlString += '<p class="card-text">'+data[i].restaurant_address+' '+data[i].restaurant_city+' '+data[i].restaurant_state+' '+data[i].restaurant_zip+' Tel:'+data[i].restaurant_tel+'</p>';
+			htmlString += '</div></div></div>';
+			memmory += htmlString;
+		}
+		memmory += '</row>';
+		list.innerHTML = memmory;
 	}
-}
 function get_id(id_number){
 	document.getElementById("status").innerHTML = id_number;
 	localStorage.setItem("restaurant_id", id_number);

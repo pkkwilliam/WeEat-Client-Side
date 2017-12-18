@@ -7,7 +7,7 @@
    <display-name>WeEat.com</display-name>
 
    <servlet>
-      <servlet-name>WeEat-Client-Side</servlet-name>
+      <servlet-name>Project2</servlet-name>
       <servlet-class>
          org.springframework.web.servlet.DispatcherServlet
       </servlet-class>
@@ -15,7 +15,7 @@
    </servlet>
 
    <servlet-mapping>
-      <servlet-name>WeEat-Client-Side</servlet-name>
+      <servlet-name>Project2</servlet-name>
       <url-pattern>/</url-pattern>
    </servlet-mapping>
  

@@ -20,8 +20,16 @@ function clearSession(){
     xmlHttp.send();	
 }
 function checkLogin(){
-	window.location = "welcome";
-	
+	var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //alert(this.responseText);
+    	}
+    };
+    xmlHttp.open( "GET", 
+        		"checkLogin",
+        				true ); // false for synchronous request
+    xmlHttp.send();	
 }
 function go_shopping_cart(){
 	var xmlHttp = new XMLHttpRequest();

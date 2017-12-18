@@ -6,9 +6,7 @@
 <title>Insert title here</title>
 </head>
 <style>
-body {
-    background-image: url("http://lendmycard.com/CS691/image/background.jpg");
-}
+
 </style>
 <body>
 <div id = "status"></div>
@@ -17,5 +15,5 @@ body {
 <spring:url value="/resources/get_item.js" var="get_item" />
 <script src="${get_item}"></script>
 <script>window.onload = getItem()</script>
-
+<%@ include file ="footer.jsp" %>
 </html>

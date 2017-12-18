@@ -15,5 +15,5 @@
 <spring:url value="/resources/success.js" var="successJS" />
 <script src="${successJS}"></script>
 <script>window.onload = getStatusUpdate();</script>
-
+<%@ include file ="footer.jsp" %>
 </html>
