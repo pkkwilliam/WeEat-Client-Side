@@ -9,6 +9,7 @@ import static Values.Strings.detail_restaurant_id;
 import static Values.Strings.order_total;
 import static Values.Strings.order_date;
 import static Values.Strings.status;
+import static Values.Strings.reviewed;
 import static Values.Strings.ORDERS_SQLTABLE;
 import classes.Orders;
 import static databases.DatabaseConnection.query;
@@ -45,7 +46,7 @@ public class SuccessController {
     // methods 
 
     private static ArrayList<Orders> getStatusUpdate(String username) {    // this need to impore by receiving multiple order
-    	    String query = "SELECT * FROM "+ORDERS_SQLTABLE+" WHERE username = '"+username+"' AND status < 5";
+    	    String query = "SELECT * FROM "+ORDERS_SQLTABLE+" WHERE username = '"+username+"'";
     	    ResultSet result = query(query);
     	    ArrayList<Orders> orders = new ArrayList<Orders>();
     	    try {
@@ -57,7 +58,8 @@ public class SuccessController {
 								result.getInt(detail_restaurant_id),
 								result.getString(order_total),
 								result.getString(order_date),
-								result.getInt(status)
+								result.getInt(status),
+								result.getBoolean(reviewed)
 								));
 				}
 			} catch (SQLException e) {

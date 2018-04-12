@@ -118,7 +118,6 @@ public class ShoppingCartController {
 
 	@RequestMapping(value = "place_order", method = RequestMethod.GET)
 	public String placeOrder(ModelMap model) {
-		
 		String username = String.valueOf(model.get(sessionUsername));
 		String orderJson = getJsonCartByUserName(username);
 		if(orderJson != null && orderJson != "") {
@@ -127,7 +126,7 @@ public class ShoppingCartController {
 				deleteAndUpdateQuery(deleteCartQuery);
 				return "success";
 			}else
-				return "shopping_cart";		
+				return "shopping_cart";
 		}
 		else 
 			return "shopping_cart";
@@ -212,6 +211,7 @@ public class ShoppingCartController {
 		return new Gson().toJson(list);
 	}
 	private static boolean placeOrder(String json, String username) {
+		System.out.println("HERERERE");
 		ShoppingCart cart[] = new Gson().fromJson(json, ShoppingCart[].class);
 		double amountTotal = 0;
 		int restaurantId = 0;
@@ -222,7 +222,7 @@ public class ShoppingCartController {
 		System.out.println(amountTotal);
 		// last parameter: 1 = status, the other is date of order
 		System.out.println(new java.util.Date().toString());
-		String values[] = {json,username,String.valueOf(restaurantId),String.valueOf(amountTotal),new java.util.Date().toString(),"1"}; 
+		String values[] = {json,username,String.valueOf(restaurantId),String.valueOf(amountTotal),new java.util.Date().toString(),"1","0"}; 
 		String query = variableNumberInsertQuery(getOrderAttribute(),values,ORDERS_SQLTABLE);
 	    return insert(query);    
 	}

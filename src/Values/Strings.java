@@ -68,8 +68,9 @@ public static final String order_item_json = "item_json";
 public static final String order_total = "total_amount";
 public static final String order_date = "order_date";
 public static final String status = "status";
+public static final String reviewed = "reviewed";
 public static String[] getOrderAttribute() {
-	return new String[] {order_item_json,user_Username,detail_restaurant_id,order_total,order_date,status};
+	return new String[] {order_item_json,user_Username,detail_restaurant_id,order_total,order_date,status,reviewed};
 }
 
 // Cart SQL Table

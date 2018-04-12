@@ -7,7 +7,6 @@
     <meta name="author" content="">
 <title>WeEat.com</title>
 
-
 <%@ include file ="header.jsp" %>
 </head>
 <spring:url value="/resources/test.css" var="real" />

@@ -76,5 +76,5 @@ public static String updateQuery(String table, String UpdateAttribute, String up
 	String query = "UPDATE "+table+" SET "+UpdateAttribute+" = '"+updateValue+"' where "+whereAttribute+" = '"+whereValue+"'";
 	System.out.println(query);
 	return query;
-}
+	}
 }

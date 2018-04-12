@@ -19,6 +19,7 @@ function parseJSON(json){
 	json = JSON.parse(json);
 	var latitude = json.location.lat;
 	var longtitude = json.location.lng;
+	document.getElementById("location").innerHTML = "Your Location is "+latitude+" "+longtitude;
 	getRestaurant(latitude,longtitude);
 	
 }
@@ -44,7 +45,9 @@ function renderHTML(data){
 			if(data[i].restaurant_image_link == null)		
 			htmlString += '<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>';
 			else{
-				var link = 'http://lendmycard.com/CS691/image/restaurant/'+data[i].restaurant_id+'/'+data[i].restaurant_image_link;
+				// Should be this since it can take restaurant ID
+				//var link = 'http://karmaincorporated.com/imageRecognitionUpload/'+data[i].restaurant_id+'/'+data[i].restaurant_image_link;
+				var link = 'http://karmaincorporated.com/imageRecognitionUpload/'+data[i].restaurant_image_link;
 				htmlString += '<img style="height:350;" src="'+link+'"/>';
 			}
 			htmlString += '<div class="card-body" style="height:160px">';

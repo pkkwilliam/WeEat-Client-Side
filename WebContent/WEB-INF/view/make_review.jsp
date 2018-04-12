@@ -5,12 +5,14 @@
 <%@ include file = "header.jsp" %>
 </head>
 <body>
-<div style="margin: 50px">
-	<h1> Your Order Status</h1>
-
-	<div id = "orders"></div>
-</div>
-
+<center>
+	<h1>Make A Review</h1>
+	<form method="POST" action="make_review">
+		Rating<br/><input type="number" name="rating"/><br/><br/>
+		Detail<br/><textarea rows="5" cols="50" name="detail"></textarea><br/><br/>
+		<input type="submit" class="btn btn-primary">
+	</form>
+</center>
 <br/>
 
 </body>

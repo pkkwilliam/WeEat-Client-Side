@@ -9,8 +9,10 @@
 
 </style>
 <body>
-<div id = "status"></div>
-<span id = "list"></span>
+<!--  <div id = "status"></div> -->
+<div style="margin: 50px">
+	<span id="list"></span>
+</div>
 </body>
 <spring:url value="/resources/get_item.js" var="get_item" />
 <script src="${get_item}"></script>

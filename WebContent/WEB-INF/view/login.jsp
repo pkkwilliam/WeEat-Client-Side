@@ -51,7 +51,7 @@ div.well{
  <div class="container">
   <div class="row">
     <div class="Absolute-Center is-Responsive">
-     <div id="logo-container"><img style="width: 200px; height: 200px;" src="http://lendmycard.com/CS691/image/wheat.png"></div>
+     <div id="logo-container"><img style="width: 200px; height: 200px;" src="http://karmaincorporated.com/imageRecognitionUpload/wheat.png"></div>
       <div class="col-sm-12 col-md-10 col-md-offset-1">
         <form action = "loginHandler" method="POST">
           <div class="form-group input-group">
